@@ -16,9 +16,11 @@ def resize_4k(fp, dir_name):
     out = im.resize((rex, rey), PIL.Image.LANCZOS)
 
     _, fn = os.path.split(fp)
-    name, ext = os.path.splitext(fn)
-    out.save(os.path.join(dir_name, name + '_4k' + ext), 'PNG')
-    print(f'reszie : {name+ext}')
+    name, _ = os.path.splitext(fn)
+
+    out_file_name = os.path.join(dir_name, name + '_4k.png')
+    out.save(out_file_name, 'PNG')
+    print(f'reszie : {out_file_name}')
 
 
 def dir_fn_ext(file_path):
@@ -38,7 +40,7 @@ def remakeZip(zf, func):
             z.extractall(tmpdir1)
 
         with tempfile.TemporaryDirectory(dir=dir_name) as tmpdir2:
-            for f1 in glob.glob(os.path.join(tmpdir1, '*.png')):
+            for f1 in glob.glob(os.path.join(tmpdir1, '*.*')):
                 func(f1, tmpdir2)
 
             rezip_fn = os.path.join(dir_name, file_name + '_4k' + file_ext)
